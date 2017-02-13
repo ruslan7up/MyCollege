@@ -22,8 +22,6 @@ public class FBMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-
-
         if(remoteMessage!=null) {
             if(remoteMessage.getData().size()>0) {
                 Log.d(LOG_TAG,"FIREBASE MESSAGE RECIEVED "+remoteMessage.getData().get("message"));

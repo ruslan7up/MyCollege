@@ -3,7 +3,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <string name="refresh">Обновить</string>
     <string name="news">Новости</string>
     <string name="schedule">Расписание занятий </string>
     <string name="btschedule">Расписание звонков</string>
