@@ -45,6 +45,8 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-jackson:2.1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    // https://mvnrepository.com/artifact/com.ibuildapp/TwoWayGridView
+    compile group: 'com.ibuildapp', name: 'TwoWayGridView', version: '1.0.0'
 }
 
 

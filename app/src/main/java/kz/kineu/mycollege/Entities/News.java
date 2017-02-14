@@ -36,8 +36,8 @@ public class News implements Parcelable{
         title = parcel.readString();
         date = new Date(parcel.readLong());
         text = parcel.readString();
-        links = new ArrayList<>();
-        parcel.readList(links, getClass().getClassLoader());
+        links = new ArrayList<Link>();
+        parcel.readTypedList(links, Link.CREATOR);
     }
 
     public static final Creator<News> CREATOR = new Creator<News>() {

@@ -3,33 +3,22 @@ package kz.kineu.mycollege.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
+import kz.kineu.mycollege.Acitivity.FragmentActivity;
 import kz.kineu.mycollege.Adapters.NewsAdapter;
-import kz.kineu.mycollege.Entities.Link;
 import kz.kineu.mycollege.Entities.News;
 import kz.kineu.mycollege.R;
-import kz.kineu.mycollege.API.NewsAPI;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
@@ -67,7 +56,7 @@ public class NewsListFragment extends Fragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), kz.kineu.mycollege.FragmentActivity.class);
+                Intent intent = new Intent(getActivity(), FragmentActivity.class);
                 intent.putExtra("fragment","readnews");
                 intent.putExtra("data",newslistadapter.getItem(position));
                 startActivity(intent);
