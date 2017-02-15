@@ -105,11 +105,7 @@ public class FragmentActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(LOG_TAG,"ON STOP CALLED");
-    }
+
 
     @Override
     public void onBackPressed() {
