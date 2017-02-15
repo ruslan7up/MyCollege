@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -29,6 +30,11 @@ public class ImagesAdapter extends BaseAdapter {
     private final String url = "http://78.46.123.237:7777";
     private List<Link> links;
     private Context context;
+    private ImageLoader mLoader;
+
+    {
+        mLoader = ImageLoader.getInstance();
+    }
 
     public ImagesAdapter(List<Link> links, Context context) {
         this.links = links;
@@ -57,7 +63,7 @@ public class ImagesAdapter extends BaseAdapter {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.img_item,null);
         ImageView ivImage = (ImageView) view.findViewById(R.id.ivPhoto);
-        Picasso.with(context).load(url+link.getLink()).into(ivImage);
+        mLoader.displayImage(url+link.getLink(),ivImage);
         return view;
     }
 

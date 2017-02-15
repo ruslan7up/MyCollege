@@ -12,7 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
@@ -39,8 +40,12 @@ public class NewsAdapter extends ArrayAdapter<News> {
     private Integer currentpage;
     private Retrofit client;
     private String url = "http://78.46.123.237:7777";
+    private ImageLoader mLoader;
+    private DisplayImageOptions options;
 
     {
+        mLoader = ImageLoader.getInstance();
+        options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).build();
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         OkHttpClient httpClient = builder.readTimeout(4, TimeUnit.SECONDS).writeTimeout(4,TimeUnit.SECONDS).connectTimeout(4,TimeUnit.SECONDS).build();
         client = new Retrofit.Builder().addConverterFactory(JacksonConverterFactory.create()).baseUrl(url).client(httpClient).build();
@@ -73,7 +78,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
             tvText.setText(text.substring(0,51)+"...");
         }
         if(!news.getLinks().isEmpty()) {
-            Picasso.with(context).load("http://78.46.123.237:7777" + news.getLinks().get(0).getLink()).into(ivImage);
+            mLoader.displayImage(url+ news.getLinks().get(0).getLink(),ivImage, options);
         } else {
             ivImage.setImageResource(R.drawable.ic_no_photos);
         }

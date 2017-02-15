@@ -17,6 +17,8 @@ import android.view.View;
 import android.widget.Toast;
 
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -65,8 +67,12 @@ public class FragmentActivity extends AppCompatActivity
         settingsFragment = new SettingsFragment();
         mReadNewsFragment = new ReadNewsFragment();
 
-        if(getIntent()==null || getIntent().getExtras()==null) {
-            clearImageCache(getCacheDir());
+        if(getIntent()==null || getIntent().getStringExtra("fragment")==null) {
+            ImageLoader imageLoader = ImageLoader.getInstance();
+            imageLoader.init(ImageLoaderConfiguration.createDefault(this));
+
+            imageLoader.clearDiskCache();
+            imageLoader.clearMemoryCache();
             FragmentTransaction transaction = getSupportFragmentManager().
                     beginTransaction();
             transaction.replace(R.id.container, mNewsListFragment);
@@ -146,12 +152,5 @@ public class FragmentActivity extends AppCompatActivity
     }
 
 
-    private static void clearImageCache(File directory) {
-        if(directory.isDirectory()) {
-            for (File child :directory.listFiles()) {
-                clearImageCache(child);
-            }
-        }
-        directory.delete();
-    }
+
 }

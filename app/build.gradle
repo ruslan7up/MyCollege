@@ -44,9 +44,8 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.0.1'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-jackson:2.1.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    // https://mvnrepository.com/artifact/com.ibuildapp/TwoWayGridView
     compile group: 'com.ibuildapp', name: 'TwoWayGridView', version: '1.0.0'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 }
 
 
