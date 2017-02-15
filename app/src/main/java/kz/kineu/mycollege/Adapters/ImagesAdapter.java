@@ -10,8 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -31,8 +31,10 @@ public class ImagesAdapter extends BaseAdapter {
     private List<Link> links;
     private Context context;
     private ImageLoader mLoader;
+    private DisplayImageOptions options;
 
     {
+        options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).build();
         mLoader = ImageLoader.getInstance();
     }
 
@@ -63,7 +65,7 @@ public class ImagesAdapter extends BaseAdapter {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.img_item,null);
         ImageView ivImage = (ImageView) view.findViewById(R.id.ivPhoto);
-        mLoader.displayImage(url+link.getLink(),ivImage);
+        mLoader.displayImage(url+link.getLink(),ivImage, options);
         return view;
     }
 
