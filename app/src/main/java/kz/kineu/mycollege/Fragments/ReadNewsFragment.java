@@ -49,9 +49,13 @@ public class ReadNewsFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
         News news = getActivity().getIntent().getParcelableExtra("data");
-        Log.d("MyCollegeApp",news.getLinks().toString());
-        imagesAdapter = new ImagesAdapter(news.getLinks(),getActivity());
-        gvPhotos.setAdapter(imagesAdapter);
+        if(news.getLinks().size()>0) {
+            Log.d("MyCollegeApp", news.getLinks().toString());
+            imagesAdapter = new ImagesAdapter(news.getLinks(), getActivity());
+            gvPhotos.setAdapter(imagesAdapter);
+        } else {
+            gvPhotos.setVisibility(View.GONE);
+        }
         tvTitle.setText(news.getTitle());
         tvText.setText(news.getText());
         tvDate.setText(sdf.format(news.getDate()).toString());

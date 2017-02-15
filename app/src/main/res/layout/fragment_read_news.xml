@@ -25,7 +25,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tvReadTitle"
                 android:textStyle="bold"
-                android:textSize="24sp"/>
+                android:textSize="24sp"
+                android:textColor="@android:color/background_dark"/>
 
             <TextView
                 android:text="TextView"
@@ -37,15 +38,15 @@
                 android:layout_alignParentStart="true"/>
 
             <com.jess.ui.TwoWayGridView
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+
                 android:background="#E8E8E8"
                 android:id="@+id/gvPhotos"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
+
                 app:cacheColorHint="#E8E8E8"
                 app:columnWidth="80dp"
-                app:rowHeight="80dp"
+                app:rowHeight="150dp"
                 app:numColumns="auto_fit"
                 app:numRows="auto_fit"
                 app:verticalSpacing="16dp"
@@ -53,7 +54,7 @@
                 app:stretchMode="spacingWidthUniform"
                 app:scrollDirectionPortrait="horizontal"
                 app:scrollDirectionLandscape="horizontal"
-                app:gravity="center"/>
+                android:foregroundGravity="center_vertical|center_horizontal"/>
             <TextView
                 android:text="TextView"
                 android:layout_width="match_parent"
@@ -65,7 +66,8 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:textSize="18sp"/>
+                android:textSize="18sp"
+                android:textColor="@android:color/background_dark"/>
         </LinearLayout>
     </ScrollView>
 

@@ -3,6 +3,7 @@ package kz.kineu.mycollege.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,7 +16,6 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import kz.kineu.mycollege.Acitivity.FragmentActivity;
 import kz.kineu.mycollege.Adapters.NewsAdapter;
 import kz.kineu.mycollege.Entities.News;
 import kz.kineu.mycollege.R;
@@ -30,7 +30,6 @@ public class NewsListFragment extends Fragment {
     private String url = "http://78.46.123.237:7777";
     private static final String LOG_TAG = "MyCollegeApp";
     private Retrofit client;
-
 
 
     public NewsListFragment() {
@@ -48,7 +47,6 @@ public class NewsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         getActivity().setTitle(R.string.news);
-
         client = new Retrofit.Builder().addConverterFactory(JacksonConverterFactory.create()).baseUrl(url).build();
         View view = inflater.inflate(R.layout.fragment_news, container, false);
         newslistadapter = new NewsAdapter(getActivity(),0);
@@ -56,7 +54,7 @@ public class NewsListFragment extends Fragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), FragmentActivity.class);
+                Intent intent = new Intent(getActivity(), kz.kineu.mycollege.Acitivity.FragmentActivity.class);
                 intent.putExtra("fragment","readnews");
                 intent.putExtra("data",newslistadapter.getItem(position));
                 startActivity(intent);

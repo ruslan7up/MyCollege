@@ -90,7 +90,7 @@ public class FragmentActivity extends AppCompatActivity
                         finish();
                     }
                 });
-                transaction.addToBackStack("fragBack").commit();
+                transaction.commit();
             } else {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.container, mNewsListFragment);
@@ -99,6 +99,12 @@ public class FragmentActivity extends AppCompatActivity
             }
 
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(LOG_TAG,"ON STOP CALLED");
     }
 
     @Override
@@ -146,7 +152,6 @@ public class FragmentActivity extends AppCompatActivity
                 clearImageCache(child);
             }
         }
-
         directory.delete();
     }
 }

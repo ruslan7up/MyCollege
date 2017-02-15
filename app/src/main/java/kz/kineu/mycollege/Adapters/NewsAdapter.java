@@ -10,14 +10,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 import kz.kineu.mycollege.API.NewsAPI;
 import kz.kineu.mycollege.Entities.News;
 import kz.kineu.mycollege.R;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,8 +41,11 @@ public class NewsAdapter extends ArrayAdapter<News> {
     private String url = "http://78.46.123.237:7777";
 
     {
-        client = new Retrofit.Builder().addConverterFactory(JacksonConverterFactory.create()).baseUrl(url).build();
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        OkHttpClient httpClient = builder.readTimeout(4, TimeUnit.SECONDS).writeTimeout(4,TimeUnit.SECONDS).connectTimeout(4,TimeUnit.SECONDS).build();
+        client = new Retrofit.Builder().addConverterFactory(JacksonConverterFactory.create()).baseUrl(url).client(httpClient).build();
         currentpage = 0;
+        pagesCount = 0;
         getNOP();
         loadNews();
     }
@@ -59,7 +65,6 @@ public class NewsAdapter extends ArrayAdapter<News> {
         TextView tvTitle = (TextView) view.findViewById(R.id.tvReadTitle);
         TextView tvText = (TextView) view.findViewById(R.id.tvText);
         ImageView ivImage = (ImageView) view.findViewById(R.id.ivImage);
-        ivImage.setScaleType(ImageView.ScaleType.FIT_XY);
         tvTitle.setText(news.getTitle());
         String text = news.getText();
         if(text.length()<51) {
@@ -75,6 +80,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
         if(isEnd(position) && currentpage<pagesCount) {
             loadNews();
         }
+
         return view;
     }
 
@@ -91,12 +97,14 @@ public class NewsAdapter extends ArrayAdapter<News> {
                     addAll((Arrays.asList(response.body())));
                     notifyDataSetChanged();
                     currentpage++;
+                    getNOP();
                 }
             }
 
             @Override
             public void onFailure(Call<News[]> call, Throwable t) {
                 Log.d(LOG_TAG,"NEWS LOAD ERROR "+t.getMessage());
+
             }
         });
     }
@@ -115,7 +123,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
 
             @Override
             public void onFailure(Call<Integer> call, Throwable t) {
-                Log.d(LOG_TAG,"NUMBER OF PAGES "+t.getMessage());
+                Toast.makeText(context,"При загрузке новостей возникла ошибка! Проверьте соеденение с интернетом",Toast.LENGTH_SHORT).show();
             }
         });
     }
