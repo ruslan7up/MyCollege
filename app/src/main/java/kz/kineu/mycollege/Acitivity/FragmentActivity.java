@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 
 import java.io.File;
 
@@ -70,8 +71,6 @@ public class FragmentActivity extends AppCompatActivity
             ImageLoader imageLoader = ImageLoader.getInstance();
             imageLoader.init(ImageLoaderConfiguration.createDefault(this));
 
-            imageLoader.clearDiskCache();
-            imageLoader.clearMemoryCache();
             FragmentTransaction transaction = getSupportFragmentManager().
                     beginTransaction();
             transaction.replace(R.id.container, mNewsListFragment);
@@ -122,7 +121,7 @@ public class FragmentActivity extends AppCompatActivity
         }
 
     }
-    
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
