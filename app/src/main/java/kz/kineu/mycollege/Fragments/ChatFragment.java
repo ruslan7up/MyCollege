@@ -45,10 +45,10 @@ public class ChatFragment extends Fragment {
         wsConnection = new WebSocketConnection();
         objectMapper = new ObjectMapper();
     }
+
     public ChatFragment() {
 
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,6 @@ public class ChatFragment extends Fragment {
             public void onClick(View v) {
                 if(name.isEmpty()) {
                     getNameDialog();
-
                 } else {
                     String text = messageText.getText().toString();
                     ChatMessage chatMessage = new ChatMessage(name, text);
@@ -91,11 +90,15 @@ public class ChatFragment extends Fragment {
                 }
             }
         });
+        sendButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                getNameDialog();
+                return true;
+            }
+        });
         return view;
     }
-
-
-
 
     private void establishConnection() {
         try {
@@ -149,7 +152,7 @@ public class ChatFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                     if (name.isEmpty()) {
                         name = input.getText().toString();
-                        dialog.cancel();
+
                     } else {
 
                     }

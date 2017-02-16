@@ -3,6 +3,8 @@ package kz.kineu.mycollege.Services;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -32,7 +34,7 @@ public class FBMessagingService extends FirebaseMessagingService {
 
                 PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(this).setSmallIcon(R.drawable.ic_notification2).setContentTitle("Мой колледж").setContentText(remoteMessage.getData().get("message")).setContentIntent(pendingIntent).setAutoCancel(true);
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(this).setContentTitle("Мой колледж").setSmallIcon(R.mipmap.ic_launcher).setLargeIcon(BitmapFactory.decodeResource(getBaseContext().getResources(),R.mipmap.ic_launcher)).setContentText(remoteMessage.getData().get("message")).setContentIntent(pendingIntent).setAutoCancel(true);
 
                 NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 

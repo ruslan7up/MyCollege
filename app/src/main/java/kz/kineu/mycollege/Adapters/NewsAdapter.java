@@ -91,7 +91,6 @@ public class NewsAdapter extends ArrayAdapter<News> {
 
 
     private void loadNews() {
-        Log.d(LOG_TAG,"LOAD NEWS CALLED");
         NewsAPI newsAPI = client.create(NewsAPI.class);
         Call<News[]> call = newsAPI.getNews(Integer.toString(currentpage+1));
         call.enqueue(new Callback<News[]>() {
@@ -122,7 +121,6 @@ public class NewsAdapter extends ArrayAdapter<News> {
             public void onResponse(Call<Integer> call, Response<Integer> response) {
                 if(response.isSuccessful()) {
                     pagesCount = response.body();
-                    Log.d(LOG_TAG,"NUMBER OF PAGES "+pagesCount);
                 }
             }
 

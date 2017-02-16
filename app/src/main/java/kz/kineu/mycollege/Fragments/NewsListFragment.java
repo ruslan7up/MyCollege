@@ -15,22 +15,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 
-import java.util.ArrayList;
-
 import kz.kineu.mycollege.Adapters.NewsAdapter;
-import kz.kineu.mycollege.Entities.News;
 import kz.kineu.mycollege.R;
-import retrofit2.Retrofit;
-import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class NewsListFragment extends Fragment {
 
-    private ArrayList<News> list;
     private NewsAdapter newslistadapter;
     private ListView mListView;
-    private String url = "http://78.46.123.237:7777";
     private static final String LOG_TAG = "MyCollegeApp";
-    private Retrofit client;
 
 
     public NewsListFragment() {
@@ -47,7 +39,7 @@ public class NewsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        client = new Retrofit.Builder().addConverterFactory(JacksonConverterFactory.create()).baseUrl(url).build();
+
         View view = inflater.inflate(R.layout.fragment_news, container, false);
         newslistadapter = new NewsAdapter(getActivity(),0);
         mListView = (ListView) view.findViewById(R.id.lvNews);
@@ -75,10 +67,6 @@ public class NewsListFragment extends Fragment {
     }
 
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -88,10 +76,5 @@ public class NewsListFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d("MyCollegeApp"," NEWS ON DESTROY  CALLED");
-    }
 
 }
