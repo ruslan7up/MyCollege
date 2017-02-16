@@ -2,6 +2,7 @@ package kz.kineu.mycollege.Acitivity;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -43,7 +44,7 @@ public class FragmentActivity extends AppCompatActivity
     private NotificationsFragment notificationsFragment;
     private SettingsFragment settingsFragment;
     private ReadNewsFragment mReadNewsFragment;
-
+    private String lastTag = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,19 +74,22 @@ public class FragmentActivity extends AppCompatActivity
 
             FragmentTransaction transaction = getSupportFragmentManager().
                     beginTransaction();
-            transaction.replace(R.id.container, mNewsListFragment);
+            transaction.add(R.id.container, mNewsListFragment,"news");
+            lastTag = "news";
             navigationView.getMenu().getItem(0).setChecked(true);
             transaction.commit();
         } else {
             String fragmentname = getIntent().getStringExtra("fragment");
             if(fragmentname.equals("notifications")) {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.container, notificationsFragment);
+                transaction.add(R.id.container, notificationsFragment,"notifications");
+                lastTag = "notifications";
                 navigationView.getMenu().getItem(4).setChecked(true);
                 transaction.commit();
             } else if (fragmentname.equals("readnews")){
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.container,mReadNewsFragment);
+                transaction.add(R.id.container,mReadNewsFragment,"readnews");
+                lastTag = "readnews";
                 navigationView.getMenu().getItem(0).setChecked(true);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -120,23 +124,66 @@ public class FragmentActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
 
         if (id == R.id.nav_news) {
-            transaction.replace(R.id.container, mNewsListFragment);
+            transaction.hide(manager.findFragmentByTag(lastTag));
+            if(manager.findFragmentByTag("news")!=null) {
+                transaction.show(manager.findFragmentByTag("news"));
+                lastTag = "news";
+            } else {
+                transaction.add(R.id.container, mNewsListFragment,"news");
+                lastTag = "news";
+            }
+
         } else if (id == R.id.nav_schedule) {
-            transaction.replace(R.id.container, scheduleFragment);
+            transaction.hide(manager.findFragmentByTag(lastTag));
+            if(manager.findFragmentByTag("schedule")!=null) {
+                transaction.show(manager.findFragmentByTag("schedule"));
+                lastTag = "schedule";
+            } else {
+                transaction.add(R.id.container, scheduleFragment,"schedule");
+                lastTag = "schedule";
+            }
         } else if (id == R.id.nav_btschedule) {
-            transaction.replace(R.id.container, btScheduleFragment);
+            transaction.hide(manager.findFragmentByTag(lastTag));
+            if(manager.findFragmentByTag("btschedule")!=null) {
+                transaction.show(manager.findFragmentByTag("btschedule"));
+                lastTag = "btschedule";
+            } else {
+                transaction.add(R.id.container, btScheduleFragment,"btschedule");
+                lastTag = "btschedule";
+            }
         } else if (id == R.id.nav_chat) {
-            transaction.replace(R.id.container, chatFragment);
+            transaction.hide(manager.findFragmentByTag(lastTag));
+            if(manager.findFragmentByTag("chat")!=null) {
+                transaction.show(manager.findFragmentByTag("chat"));
+                lastTag = "chat";
+            } else {
+                transaction.add(R.id.container, chatFragment,"chat");
+                lastTag = "chat";
+            }
         } else if (id == R.id.nav_notifications) {
-            transaction.replace(R.id.container, notificationsFragment);
+            transaction.hide(manager.findFragmentByTag(lastTag));
+            if(manager.findFragmentByTag("notifications")!=null) {
+                transaction.show(manager.findFragmentByTag("notifications"));
+                lastTag = "notifications";
+            } else {
+                transaction.add(R.id.container, notificationsFragment,"notifications");
+                lastTag = "notifications";
+            }
         } else if (id == R.id.nav_settings) {
-            transaction.replace(R.id.container, settingsFragment);
+            transaction.hide(manager.findFragmentByTag(lastTag));
+            if(manager.findFragmentByTag("settings")!=null) {
+                transaction.show(manager.findFragmentByTag("settings"));
+                lastTag = "settings";
+            } else {
+                transaction.add(R.id.container, settingsFragment,"settings");
+                lastTag = "settings";
+            }
         }
 
         transaction.commit();
@@ -144,7 +191,4 @@ public class FragmentActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
-
 }
