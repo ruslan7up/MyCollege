@@ -59,7 +59,6 @@ public class ChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         getActivity().setTitle(R.string.chat);
-
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
         linearLayout = (LinearLayout) view.findViewById(R.id.llChat);
         sendButton = (ImageButton) view.findViewById(R.id.ibSend);
@@ -100,6 +99,7 @@ public class ChatFragment extends Fragment {
 
     private void establishConnection() {
         try {
+
             wsConnection.connect(url,new WebSocketHandler() {
                 @Override
                 public void onOpen() {
@@ -128,7 +128,10 @@ public class ChatFragment extends Fragment {
                         Log.e(LOG_TAG,"Exception catched "+e.getMessage());
                     }
                 }
+
+
             });
+
         } catch (Exception e) {
 
         }
