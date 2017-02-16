@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethod;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -57,7 +58,16 @@ public class FragmentActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                if(slideOffset != 0) {
+                    InputMethodManager inputManager = (InputMethodManager) FragmentActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputManager.hideSoftInputFromWindow(FragmentActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+            }
+        };
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -74,7 +84,7 @@ public class FragmentActivity extends AppCompatActivity
         if(getIntent()==null || getIntent().getStringExtra("fragment")==null) {
             ImageLoader imageLoader = ImageLoader.getInstance();
             imageLoader.init(ImageLoaderConfiguration.createDefault(this));
-
+            this.setTitle(R.string.news);
             FragmentTransaction transaction = getSupportFragmentManager().
                     beginTransaction();
             transaction.add(R.id.container, mNewsListFragment,"news");
@@ -84,12 +94,14 @@ public class FragmentActivity extends AppCompatActivity
         } else {
             String fragmentname = getIntent().getStringExtra("fragment");
             if(fragmentname.equals("notifications")) {
+                this.setTitle(R.string.notifications);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.add(R.id.container, notificationsFragment,"notifications");
                 lastTag = "notifications";
                 navigationView.getMenu().getItem(4).setChecked(true);
                 transaction.commit();
             } else if (fragmentname.equals("readnews")){
+                this.setTitle(R.string.news);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.add(R.id.container,mReadNewsFragment,"readnews");
                 lastTag = "readnews";
@@ -132,11 +144,8 @@ public class FragmentActivity extends AppCompatActivity
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
 
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
-
-
         if (id == R.id.nav_news) {
+            this.setTitle(R.string.news);
             transaction.hide(manager.findFragmentByTag(lastTag));
             if(manager.findFragmentByTag("news")!=null) {
                 transaction.show(manager.findFragmentByTag("news"));
@@ -147,6 +156,7 @@ public class FragmentActivity extends AppCompatActivity
             }
 
         } else if (id == R.id.nav_schedule) {
+            this.setTitle(R.string.schedule);
             transaction.hide(manager.findFragmentByTag(lastTag));
             if(manager.findFragmentByTag("schedule")!=null) {
                 transaction.show(manager.findFragmentByTag("schedule"));
@@ -156,6 +166,7 @@ public class FragmentActivity extends AppCompatActivity
                 lastTag = "schedule";
             }
         } else if (id == R.id.nav_btschedule) {
+            this.setTitle(R.string.btschedule);
             transaction.hide(manager.findFragmentByTag(lastTag));
             if(manager.findFragmentByTag("btschedule")!=null) {
                 transaction.show(manager.findFragmentByTag("btschedule"));
@@ -165,6 +176,7 @@ public class FragmentActivity extends AppCompatActivity
                 lastTag = "btschedule";
             }
         } else if (id == R.id.nav_chat) {
+            this.setTitle(R.string.chat);
             transaction.hide(manager.findFragmentByTag(lastTag));
             if(manager.findFragmentByTag("chat")!=null) {
                 transaction.show(manager.findFragmentByTag("chat"));
@@ -174,6 +186,7 @@ public class FragmentActivity extends AppCompatActivity
                 lastTag = "chat";
             }
         } else if (id == R.id.nav_notifications) {
+            this.setTitle(R.string.notifications);
             transaction.hide(manager.findFragmentByTag(lastTag));
             if(manager.findFragmentByTag("notifications")!=null) {
                 transaction.show(manager.findFragmentByTag("notifications"));
@@ -183,6 +196,7 @@ public class FragmentActivity extends AppCompatActivity
                 lastTag = "notifications";
             }
         } else if (id == R.id.nav_settings) {
+            this.setTitle(R.string.settings);
             transaction.hide(manager.findFragmentByTag(lastTag));
             if(manager.findFragmentByTag("settings")!=null) {
                 transaction.show(manager.findFragmentByTag("settings"));

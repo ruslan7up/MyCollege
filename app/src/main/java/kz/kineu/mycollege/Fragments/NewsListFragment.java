@@ -47,7 +47,6 @@ public class NewsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getActivity().setTitle(R.string.news);
         client = new Retrofit.Builder().addConverterFactory(JacksonConverterFactory.create()).baseUrl(url).build();
         View view = inflater.inflate(R.layout.fragment_news, container, false);
         newslistadapter = new NewsAdapter(getActivity(),0);
