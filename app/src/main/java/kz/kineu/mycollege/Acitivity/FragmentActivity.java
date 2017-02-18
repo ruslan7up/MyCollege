@@ -1,7 +1,6 @@
 package kz.kineu.mycollege.Acitivity;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,22 +10,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethod;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
-
-import java.io.File;
 
 import kz.kineu.mycollege.Fragments.BTScheduleFragment;
 import kz.kineu.mycollege.Fragments.ChatFragment;
@@ -34,7 +24,6 @@ import kz.kineu.mycollege.Fragments.NewsListFragment;
 import kz.kineu.mycollege.Fragments.NotificationsFragment;
 import kz.kineu.mycollege.Fragments.ReadNewsFragment;
 import kz.kineu.mycollege.Fragments.ScheduleFragment;
-import kz.kineu.mycollege.Fragments.SettingsFragment;
 import kz.kineu.mycollege.R;
 
 public class FragmentActivity extends AppCompatActivity
@@ -46,7 +35,6 @@ public class FragmentActivity extends AppCompatActivity
     private BTScheduleFragment btScheduleFragment;
     private ChatFragment chatFragment;
     private NotificationsFragment notificationsFragment;
-    private SettingsFragment settingsFragment;
     private ReadNewsFragment mReadNewsFragment;
     private String lastTag = "";
     @Override
@@ -78,7 +66,6 @@ public class FragmentActivity extends AppCompatActivity
         btScheduleFragment = new BTScheduleFragment();
         chatFragment = new ChatFragment();
         notificationsFragment = new NotificationsFragment();
-        settingsFragment = new SettingsFragment();
         mReadNewsFragment = new ReadNewsFragment();
 
         if(getIntent()==null || getIntent().getStringExtra("fragment")==null) {
@@ -123,8 +110,6 @@ public class FragmentActivity extends AppCompatActivity
 
         }
     }
-
-
 
     @Override
     public void onBackPressed() {
@@ -194,16 +179,6 @@ public class FragmentActivity extends AppCompatActivity
             } else {
                 transaction.add(R.id.container, notificationsFragment,"notifications");
                 lastTag = "notifications";
-            }
-        } else if (id == R.id.nav_settings) {
-            this.setTitle(R.string.settings);
-            transaction.hide(manager.findFragmentByTag(lastTag));
-            if(manager.findFragmentByTag("settings")!=null) {
-                transaction.show(manager.findFragmentByTag("settings"));
-                lastTag = "settings";
-            } else {
-                transaction.add(R.id.container, settingsFragment,"settings");
-                lastTag = "settings";
             }
         }
 

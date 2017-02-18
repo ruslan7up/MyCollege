@@ -1,5 +1,6 @@
 package kz.kineu.mycollege.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
@@ -10,11 +11,13 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.jess.ui.TwoWayAdapterView;
 import com.jess.ui.TwoWayGridView;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import kz.kineu.mycollege.Acitivity.ImagesActivity;
 import kz.kineu.mycollege.Adapters.ImagesAdapter;
 import kz.kineu.mycollege.Adapters.NewsAdapter;
 import kz.kineu.mycollege.Entities.Link;
@@ -47,8 +50,7 @@ public class ReadNewsFragment extends Fragment {
 
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-
-        News news = getActivity().getIntent().getParcelableExtra("data");
+        final News news = getActivity().getIntent().getParcelableExtra("data");
         if(news.getLinks().size()>0) {
             Log.d("MyCollegeApp", news.getLinks().toString());
             imagesAdapter = new ImagesAdapter(news.getLinks(), getActivity());
@@ -59,6 +61,14 @@ public class ReadNewsFragment extends Fragment {
         tvTitle.setText(news.getTitle());
         tvText.setText(news.getText());
         tvDate.setText(sdf.format(news.getDate()).toString());
+        gvPhotos.setOnItemClickListener(new TwoWayAdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(TwoWayAdapterView<?> parent, View view, int position, long id) {
+                Intent intent  = new Intent(getActivity(), ImagesActivity.class);
+                intent.putExtra("imgurl",news.getLinks().get(position).getLink());
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
