@@ -52,7 +52,6 @@ public class ReadNewsFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         final News news = getActivity().getIntent().getParcelableExtra("data");
         if(news.getLinks().size()>0) {
-            Log.d("MyCollegeApp", news.getLinks().toString());
             imagesAdapter = new ImagesAdapter(news.getLinks(), getActivity());
             gvPhotos.setAdapter(imagesAdapter);
         } else {
@@ -65,7 +64,8 @@ public class ReadNewsFragment extends Fragment {
             @Override
             public void onItemClick(TwoWayAdapterView<?> parent, View view, int position, long id) {
                 Intent intent  = new Intent(getActivity(), ImagesActivity.class);
-                intent.putExtra("imgurl",news.getLinks().get(position).getLink());
+                intent.putExtra("imgurl",news.getLinks());
+                intent.putExtra("selectedimg", position);
                 startActivity(intent);
             }
         });

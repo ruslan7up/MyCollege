@@ -27,9 +27,11 @@ import de.tavendo.autobahn.WebSocketConnection;
 import de.tavendo.autobahn.WebSocketHandler;
 import kz.kineu.mycollege.Entities.ChatMessage;
 import kz.kineu.mycollege.R;
+import kz.kineu.mycollege.Receivers.App;
+import kz.kineu.mycollege.Receivers.NetworkStateReciever;
 
 
-public class ChatFragment extends Fragment {
+public class ChatFragment extends Fragment  implements NetworkStateReciever.ConnectivityReceiverListener{
 
     private final String LOG_TAG = "MyCollegeApp";
     private final String url = "ws://78.46.123.237:7777/chat";
@@ -58,7 +60,6 @@ public class ChatFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
         linearLayout = (LinearLayout) view.findViewById(R.id.llChat);
         sendButton = (ImageButton) view.findViewById(R.id.ibSend);
@@ -79,8 +80,12 @@ public class ChatFragment extends Fragment {
                     ChatMessage chatMessage = new ChatMessage(name, text);
                     if (!text.isEmpty()) {
                         try {
-                            wsConnection.sendTextMessage(objectMapper.writeValueAsString(chatMessage));
-                            messageText.setText("");
+                            if(wsConnection.isConnected()) {
+                                wsConnection.sendTextMessage(objectMapper.writeValueAsString(chatMessage));
+                                messageText.setText("");
+                            } else {
+                                Toast.makeText(getActivity(),"Нет соеденения с сервером", Toast.LENGTH_SHORT).show();
+                            }
                         } catch (Exception e) {
                             Toast.makeText(getContext(), "Возникла ошибка при отправке сообщения", Toast.LENGTH_SHORT).show();
                         }
@@ -97,10 +102,11 @@ public class ChatFragment extends Fragment {
                 return true;
             }
         });
+        App.getInstance().setConnectivityListener(this);
         return view;
     }
 
-    private void establishConnection() {
+    public void establishConnection() {
         try {
 
             wsConnection.connect(url,new WebSocketHandler() {
@@ -140,6 +146,7 @@ public class ChatFragment extends Fragment {
         }
     }
 
+
     private void getNameDialog() {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         alertDialog.setTitle("Чат");
@@ -167,5 +174,15 @@ public class ChatFragment extends Fragment {
             }
         });
         alertDialog.show();
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        if(isConnected) {
+            if(linearLayout.getChildCount()>0)
+                linearLayout.removeAllViews();
+            establishConnection();
+        } else {
+        }
     }
 }

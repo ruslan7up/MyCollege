@@ -107,7 +107,6 @@ public class FragmentActivity extends AppCompatActivity
                 navigationView.getMenu().getItem(0).setChecked(true);
                 transaction.commit();
             }
-
         }
     }
 
@@ -119,7 +118,6 @@ public class FragmentActivity extends AppCompatActivity
         } else {
             finish();
         }
-
     }
 
     @Override
@@ -187,6 +185,4 @@ public class FragmentActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
 }

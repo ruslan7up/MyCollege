@@ -3,13 +3,14 @@
           package="kz.kineu.mycollege">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
+        android:name=".Receivers.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-
         android:theme="@style/AppTheme">
         <activity
             android:name=".Acitivity.FragmentActivity"
@@ -22,12 +23,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Acitivity.ImagesActivity"
-                  android:configChanges="orientation|screenSize"
-            android:theme="@style/Imgtheme"
-            android:label="@string/photos">
-
+        <activity
+            android:name=".Acitivity.ImagesActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/photos"
+            android:theme="@style/Imgtheme">
         </activity>
+
         <service android:name=".Services.FBInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
@@ -38,6 +40,15 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
+
+        <activity android:name=".Acitivity.ScheduleActivity">
+        </activity>
+
+        <receiver android:name=".Receivers.NetworkStateReciever">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
