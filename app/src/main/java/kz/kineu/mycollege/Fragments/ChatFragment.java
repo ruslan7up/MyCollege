@@ -64,6 +64,7 @@ public class ChatFragment extends Fragment  implements NetworkStateReciever.Conn
         linearLayout = (LinearLayout) view.findViewById(R.id.llChat);
         sendButton = (ImageButton) view.findViewById(R.id.ibSend);
         messageText = (EditText) view.findViewById(R.id.etMessage);
+        App.getInstance().setConnectivityListener(this);
         if(name.isEmpty()) {
             getNameDialog();
         }
@@ -102,45 +103,43 @@ public class ChatFragment extends Fragment  implements NetworkStateReciever.Conn
                 return true;
             }
         });
-        App.getInstance().setConnectivityListener(this);
         return view;
     }
 
     public void establishConnection() {
         try {
-
-            wsConnection.connect(url,new WebSocketHandler() {
-                @Override
-                public void onOpen() {
-                    Log.d(LOG_TAG,"Connection established");
-                }
-
-                @Override
-                public void onClose(int code, String reason) {
-                    Log.d(LOG_TAG,"Connection lost");
-                }
-
-                @Override
-                public void onTextMessage(String payload) {
-                    ArrayList<ChatMessage> messages = null;
-                    try {
-                        messages = new ObjectMapper().readValue(payload, new TypeReference<ArrayList<ChatMessage>>(){});
-                        for (ChatMessage tmp:messages) {
-                            View view = getActivity().getLayoutInflater().inflate(R.layout.chat_item, linearLayout, false);
-                            TextView tvName = (TextView) view.findViewById(R.id.tvChatName);
-                            TextView tvText = (TextView) view.findViewById(R.id.tvChatMessge);
-                            tvName.setText(tmp.getName()+":");
-                            tvText.setText(tmp.getMessage());
-                            linearLayout.addView(view);
-                        }
-                    } catch (Exception e) {
-                        Log.e(LOG_TAG,"Exception catched "+e.getMessage());
+            if(!wsConnection.isConnected()) {
+                wsConnection.connect(url, new WebSocketHandler() {
+                    @Override
+                    public void onOpen() {
+                        Log.d(LOG_TAG, "Connection established");
                     }
-                }
 
+                    @Override
+                    public void onClose(int code, String reason) {
+                        Log.d(LOG_TAG, "Connection lost");
+                    }
 
-            });
-
+                    @Override
+                    public void onTextMessage(String payload) {
+                        ArrayList<ChatMessage> messages = null;
+                        try {
+                            messages = new ObjectMapper().readValue(payload, new TypeReference<ArrayList<ChatMessage>>() {
+                            });
+                            for (ChatMessage tmp : messages) {
+                                View view = getActivity().getLayoutInflater().inflate(R.layout.chat_item, linearLayout, false);
+                                TextView tvName = (TextView) view.findViewById(R.id.tvChatName);
+                                TextView tvText = (TextView) view.findViewById(R.id.tvChatMessge);
+                                tvName.setText(tmp.getName() + ":");
+                                tvText.setText(tmp.getMessage());
+                                linearLayout.addView(view);
+                            }
+                        } catch (Exception e) {
+                            Log.e(LOG_TAG, "Exception catched " + e.getMessage());
+                        }
+                    }
+                });
+            }
         } catch (Exception e) {
 
         }
@@ -153,19 +152,14 @@ public class ChatFragment extends Fragment  implements NetworkStateReciever.Conn
         alertDialog.setMessage("Введи свое имя:");
         final EditText input = new EditText(getActivity());
         alertDialog.setView(input);
-
         alertDialog.setPositiveButton("Ок", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                    if (name.isEmpty()) {
-                        name = input.getText().toString();
-
-                    } else {
-
-                    }
+                if (name.isEmpty()) {
+                    name = input.getText().toString();
+                }
             }
         });
-
         alertDialog.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -182,7 +176,6 @@ public class ChatFragment extends Fragment  implements NetworkStateReciever.Conn
             if(linearLayout.getChildCount()>0)
                 linearLayout.removeAllViews();
             establishConnection();
-        } else {
         }
     }
 }
