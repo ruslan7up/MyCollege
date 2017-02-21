@@ -77,6 +77,4 @@ public class ReadNewsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
-
-
 }

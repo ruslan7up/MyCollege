@@ -24,11 +24,9 @@ public class NewsListFragment extends Fragment {
     private ListView mListView;
     private static final String LOG_TAG = "MyCollegeApp";
 
-
     public NewsListFragment() {
 
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,7 +37,6 @@ public class NewsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_news, container, false);
         newslistadapter = new NewsAdapter(getActivity(),0);
         mListView = (ListView) view.findViewById(R.id.lvNews);
@@ -57,16 +54,12 @@ public class NewsListFragment extends Fragment {
     }
 
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.menu, menu);
-
         super.onCreateOptionsMenu(menu, inflater);
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

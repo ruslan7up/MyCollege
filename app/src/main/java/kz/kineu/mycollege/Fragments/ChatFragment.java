@@ -112,12 +112,13 @@ public class ChatFragment extends Fragment  implements NetworkStateReciever.Conn
                 wsConnection.connect(url, new WebSocketHandler() {
                     @Override
                     public void onOpen() {
+                        linearLayout.removeAllViews();
                         Log.d(LOG_TAG, "Connection established");
                     }
 
                     @Override
                     public void onClose(int code, String reason) {
-                        Log.d(LOG_TAG, "Connection lost");
+                        Log.d(LOG_TAG, "Connection lost.");
                     }
 
                     @Override
@@ -155,15 +156,12 @@ public class ChatFragment extends Fragment  implements NetworkStateReciever.Conn
         alertDialog.setPositiveButton("Ок", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (name.isEmpty()) {
-                    name = input.getText().toString();
-                }
+                name = input.getText().toString();
             }
         });
         alertDialog.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 dialog.cancel();
             }
         });
