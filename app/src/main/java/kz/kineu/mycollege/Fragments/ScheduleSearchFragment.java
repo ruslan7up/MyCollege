@@ -33,6 +33,7 @@ public class ScheduleSearchFragment extends Fragment {
 
     private Retrofit client;
     private String url = "http://78.46.123.237:7777";
+    private TextView tvError;
 
     {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
@@ -47,6 +48,7 @@ public class ScheduleSearchFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -59,11 +61,16 @@ public class ScheduleSearchFragment extends Fragment {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tvError.setVisibility(View.GONE);
                 if(!editText.getText().toString().isEmpty()) {
                     searchSchedule(editText.getText().toString());
+                } else {
+                    tvError.setText("Введите название группы");
+                    tvError.setVisibility(View.VISIBLE);
                 }
             }
         });
+        tvError = (TextView) view.findViewById(R.id.tvError);
         return view;
     }
 
@@ -76,7 +83,6 @@ public class ScheduleSearchFragment extends Fragment {
             public void onResponse(Call<Schedule> call, Response<Schedule> response) {
                 if(response.isSuccessful()) {
                     Schedule schedule = response.body();
-                    Toast.makeText(getActivity(),"COMPLETED "+schedule.getName()+" "+schedule.getShift(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(), kz.kineu.mycollege.Acitivity.FragmentActivity.class);
                     intent.putExtra("schedule",schedule);
                     intent.putExtra("fragment","schedule");
@@ -86,6 +92,8 @@ public class ScheduleSearchFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Schedule> call, Throwable t) {
+                tvError.setText("Расписание не найдено");
+                tvError.setVisibility(View.VISIBLE);
             }
         });
     }

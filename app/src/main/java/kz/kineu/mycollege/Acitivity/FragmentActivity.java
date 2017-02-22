@@ -90,6 +90,12 @@ public class FragmentActivity extends AppCompatActivity
                 transaction.add(R.id.container, notificationsFragment,"notifications");
                 lastTag = "notifications";
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
                 navigationView.getMenu().getItem(4).setChecked(true);
                 transaction.commit();
             } else if (fragmentname.equals("readnews")){
@@ -98,13 +104,14 @@ public class FragmentActivity extends AppCompatActivity
                 transaction.add(R.id.container,mReadNewsFragment,"readnews");
                 lastTag = "readnews";
                 navigationView.getMenu().getItem(0).setChecked(true);
+                toggle.setDrawerIndicatorEnabled(false);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-          /*      toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         finish();
                     }
-                });*/
+                });
                 transaction.commit();
             }else if(fragmentname.equals("schedule")) {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -112,6 +119,12 @@ public class FragmentActivity extends AppCompatActivity
                 lastTag = "scheduleopened";
                 navigationView.getMenu().getItem(1).setChecked(true);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
                 transaction.commit();
             } else {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -197,15 +210,4 @@ public class FragmentActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home) {
-            Toast.makeText(this,"BACK BUTTON", Toast.LENGTH_SHORT).show();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
 }

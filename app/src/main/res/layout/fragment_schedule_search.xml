@@ -26,6 +26,14 @@
         android:inputType="textMultiLine"
         android:focusable="true"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvError"
+        android:textColor="@android:color/holo_red_dark"
+        android:text="Error text"
+        android:visibility="gone"/>
+
     <Button
         android:text="Искать"
         android:layout_width="match_parent"
