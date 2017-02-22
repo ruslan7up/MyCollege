@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -24,6 +25,7 @@ import kz.kineu.mycollege.Fragments.NewsListFragment;
 import kz.kineu.mycollege.Fragments.NotificationsFragment;
 import kz.kineu.mycollege.Fragments.ReadNewsFragment;
 import kz.kineu.mycollege.Fragments.ScheduleFragment;
+import kz.kineu.mycollege.Fragments.ScheduleSearchFragment;
 import kz.kineu.mycollege.R;
 
 public class FragmentActivity extends AppCompatActivity
@@ -36,14 +38,16 @@ public class FragmentActivity extends AppCompatActivity
     private ChatFragment chatFragment;
     private NotificationsFragment notificationsFragment;
     private ReadNewsFragment mReadNewsFragment;
+    private ScheduleSearchFragment mScheduleSearchFragment;
+
     private String lastTag = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_fragment);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
@@ -67,7 +71,7 @@ public class FragmentActivity extends AppCompatActivity
         chatFragment = new ChatFragment();
         notificationsFragment = new NotificationsFragment();
         mReadNewsFragment = new ReadNewsFragment();
-
+        mScheduleSearchFragment = new ScheduleSearchFragment();
         if(getIntent()==null || getIntent().getStringExtra("fragment")==null) {
             ImageLoader imageLoader = ImageLoader.getInstance();
             imageLoader.init(ImageLoaderConfiguration.createDefault(this));
@@ -85,6 +89,7 @@ public class FragmentActivity extends AppCompatActivity
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.add(R.id.container, notificationsFragment,"notifications");
                 lastTag = "notifications";
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 navigationView.getMenu().getItem(4).setChecked(true);
                 transaction.commit();
             } else if (fragmentname.equals("readnews")){
@@ -94,12 +99,19 @@ public class FragmentActivity extends AppCompatActivity
                 lastTag = "readnews";
                 navigationView.getMenu().getItem(0).setChecked(true);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+          /*      toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         finish();
                     }
-                });
+                });*/
+                transaction.commit();
+            }else if(fragmentname.equals("schedule")) {
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.add(R.id.container,scheduleFragment,"scheduleopened");
+                lastTag = "scheduleopened";
+                navigationView.getMenu().getItem(1).setChecked(true);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 transaction.commit();
             } else {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -145,7 +157,7 @@ public class FragmentActivity extends AppCompatActivity
                 transaction.show(manager.findFragmentByTag("schedule"));
                 lastTag = "schedule";
             } else {
-                transaction.add(R.id.container, scheduleFragment,"schedule");
+                transaction.add(R.id.container, mScheduleSearchFragment,"schedule");
                 lastTag = "schedule";
             }
         } else if (id == R.id.nav_btschedule) {
@@ -185,4 +197,15 @@ public class FragmentActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
+            Toast.makeText(this,"BACK BUTTON", Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }

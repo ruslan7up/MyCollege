@@ -1,0 +1,35 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context="kz.kineu.mycollege.Fragments.ScheduleFragment"
+              android:orientation="vertical"
+    >
+
+
+    <TextView
+        android:text="Введите название группы"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView4"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="@android:color/background_dark"
+        android:textSize="24sp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/etScheduleGroupName"
+        android:hint="Например: 3ПОВТ-8"
+        android:gravity="center_vertical|center_horizontal"
+        android:inputType="textMultiLine"
+        android:focusable="true"/>
+
+    <Button
+        android:text="Искать"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnSearch"/>
+
+</LinearLayout>
