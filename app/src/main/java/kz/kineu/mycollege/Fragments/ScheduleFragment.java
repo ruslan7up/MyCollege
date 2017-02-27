@@ -41,17 +41,17 @@ public class ScheduleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.vpSchedule);
+        ViewPager viewPager  = (ViewPager) view.findViewById(R.id.vpSchedule);
         ScheduleAdapter adapter = new ScheduleAdapter(getActivity().getSupportFragmentManager(),(Schedule) getActivity().getIntent().getParcelableExtra("schedule"));
         viewPager.setAdapter(adapter);
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK);
         switch (day) {
-            case Calendar.MONDAY: viewPager.setCurrentItem(1); break;
-            case Calendar.TUESDAY: viewPager.setCurrentItem(2); break;
-            case Calendar.WEDNESDAY: viewPager.setCurrentItem(3); break;
-            case Calendar.THURSDAY: viewPager.setCurrentItem(4); break;
-            case Calendar.FRIDAY: viewPager.setCurrentItem(5); break;
+            case Calendar.MONDAY: viewPager.setCurrentItem(0); break;
+            case Calendar.TUESDAY: viewPager.setCurrentItem(1); break;
+            case Calendar.WEDNESDAY: viewPager.setCurrentItem(2); break;
+            case Calendar.THURSDAY: viewPager.setCurrentItem(3); break;
+            case Calendar.FRIDAY: viewPager.setCurrentItem(4); break;
         }
         info = (TextView) view.findViewById(R.id.tvScheduleInfo);
         Schedule schedule = getActivity().getIntent().getParcelableExtra("schedule");

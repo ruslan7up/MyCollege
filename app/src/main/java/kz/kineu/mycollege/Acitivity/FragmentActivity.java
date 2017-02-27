@@ -13,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -162,7 +161,6 @@ public class FragmentActivity extends AppCompatActivity
                 transaction.add(R.id.container, mNewsListFragment,"news");
                 lastTag = "news";
             }
-
         } else if (id == R.id.nav_schedule) {
             this.setTitle(R.string.schedule);
             transaction.hide(manager.findFragmentByTag(lastTag));
