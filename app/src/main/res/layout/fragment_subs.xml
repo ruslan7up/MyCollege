@@ -1,0 +1,39 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context="kz.kineu.mycollege.Fragments.SubsFragment"
+              android:orientation="vertical">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <Button
+        android:text="Выбрать дату"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/datebtn"/>
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="214dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView9"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:stretchColumns="*"
+                android:id="@+id/tlLesson">
+
+            </TableLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

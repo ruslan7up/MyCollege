@@ -25,6 +25,7 @@ import kz.kineu.mycollege.Fragments.NotificationsFragment;
 import kz.kineu.mycollege.Fragments.ReadNewsFragment;
 import kz.kineu.mycollege.Fragments.ScheduleFragment;
 import kz.kineu.mycollege.Fragments.ScheduleSearchFragment;
+import kz.kineu.mycollege.Fragments.SubsFragment;
 import kz.kineu.mycollege.R;
 
 public class FragmentActivity extends AppCompatActivity
@@ -38,6 +39,7 @@ public class FragmentActivity extends AppCompatActivity
     private NotificationsFragment notificationsFragment;
     private ReadNewsFragment mReadNewsFragment;
     private ScheduleSearchFragment mScheduleSearchFragment;
+    private SubsFragment mSubsFragment;
 
     private String lastTag = "";
     @Override
@@ -71,6 +73,7 @@ public class FragmentActivity extends AppCompatActivity
         notificationsFragment = new NotificationsFragment();
         mReadNewsFragment = new ReadNewsFragment();
         mScheduleSearchFragment = new ScheduleSearchFragment();
+        mSubsFragment = new SubsFragment();
         if(getIntent()==null || getIntent().getStringExtra("fragment")==null) {
             ImageLoader imageLoader = ImageLoader.getInstance();
             imageLoader.init(ImageLoaderConfiguration.createDefault(this));
@@ -170,6 +173,16 @@ public class FragmentActivity extends AppCompatActivity
             } else {
                 transaction.add(R.id.container, mScheduleSearchFragment,"schedule");
                 lastTag = "schedule";
+            }
+        } else if(id == R.id.nav_subs) {
+            this.setTitle(R.string.subs);
+            transaction.hide(manager.findFragmentByTag(lastTag));
+            if(manager.findFragmentByTag("substitution")!=null) {
+                transaction.show(manager.findFragmentByTag("substitution"));
+                lastTag = "substitution";
+            } else {
+                transaction.add(R.id.container, mSubsFragment,"substitution");
+                lastTag = "substitution";
             }
         } else if (id == R.id.nav_btschedule) {
             this.setTitle(R.string.btschedule);

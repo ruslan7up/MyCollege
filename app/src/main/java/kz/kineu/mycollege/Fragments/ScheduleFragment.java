@@ -58,8 +58,4 @@ public class ScheduleFragment extends Fragment {
         info.setText("Группа: "+schedule.getName()+" Cмена: "+schedule.getShift());
         return view;
     }
-
-
-
-
 }

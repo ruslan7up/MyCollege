@@ -11,6 +11,10 @@
             android:icon="@drawable/ic_schedule"
             android:title="@string/schedule"/>
         <item
+            android:id="@+id/nav_subs"
+            android:icon="@drawable/ic_schedule"
+            android:title="@string/subs"/>
+        <item
             android:id="@+id/nav_btschedule"
             android:icon="@drawable/ic_btschedule"
             android:title="@string/btschedule"/>
